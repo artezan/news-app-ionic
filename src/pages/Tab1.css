@@ -1,4 +1,32 @@
-.welcome-card img {
-  max-height: 35vh;
+.welcome-card ion-img {
+  max-height: 30vh;
   overflow: hidden;
 }
+.trend-card {
+  height: 400px;
+  box-shadow: 13px 14px 13px 0px rgba(32, 32, 35, 0.1);
+}
+
+.no-padding {
+  padding: 0% !important;
+}
+.wrap-text-2lines {
+  overflow: hidden;
+   text-overflow: ellipsis;
+   display: -webkit-box;
+   line-height: 16px;     /* fallback */
+   max-height: 32px;      /* fallback */
+   -webkit-line-clamp: 2; /* number of lines to show */
+   -webkit-box-orient: vertical;
+}
+/*
+p {
+    line-height: 1.5em;
+    height: 3em;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+
+ */
