@@ -6,7 +6,10 @@
   height: 400px;
   box-shadow: 13px 14px 13px 0px rgba(32, 32, 35, 0.1);
 }
-
+.news-card {
+  height: 400px;
+  /* box-shadow: 13px 14px 13px 0px rgba(32, 32, 35, 0.1); */
+}
 .no-padding {
   padding: 0% !important;
 }

@@ -35,7 +35,7 @@ const Tab1: React.FC = () => {
     numCols = '4';
 
   const NewsRow: React.FC<NewsRowProps> = ({ isLoading, data }) => {
-    const { articles } = data || {};
+    const { articles } = { ...data };
     const arr =
       isLoading && !data ? [...Array(20)] : articles.slice(4, articles.length);
     return (
@@ -58,7 +58,7 @@ const Tab1: React.FC = () => {
                 <CardSkeletonComponent isImg={true}></CardSkeletonComponent>
               ) : (
                 <div key={index}>
-                  <IonCard className='welcome-card trend-card'>
+                  <IonCard className='welcome-card news-card'>
                     <IonImg
                       src={article.urlToImage || '/assets/shapes.svg'}
                       onIonError={(err: any) =>
@@ -91,7 +91,7 @@ const Tab1: React.FC = () => {
 
   return (
     <IonPage>
-      <IonContent className='ion-padding'>
+      <IonContent className='ion-padding' fullscreen={true}>
         {loading ? (
           <>
             <CarouselComponent>
@@ -141,7 +141,6 @@ const Tab1: React.FC = () => {
                           <span className='wrap-text-2lines'>
                             {article.description}
                           </span>
-                          
                         </p>
                       </IonCardContent>
                     </IonCard>
