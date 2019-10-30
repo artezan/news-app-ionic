@@ -60,3 +60,7 @@
 ion-tab-bar {
   --background: #ff000000;
 }
+
+.card-shadows{
+  box-shadow: 13px 14px 13px 0px rgba(32, 32, 35, 0.1);
+}

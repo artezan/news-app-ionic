@@ -20,7 +20,7 @@ export const CardSkeletonComponent: React.FC<CardSkeletonProps> = ({
   <>
     <IonCard className='welcome-card'>
       {isImg && (
-        <IonItem lines='none'>
+        <IonItem lines='none' style={{ width: '500px' }}>
           <IonThumbnail style={{ width: '100%', height: '100px' }} slot='start'>
             <IonSkeletonText animated />
           </IonThumbnail>

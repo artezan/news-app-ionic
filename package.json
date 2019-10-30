@@ -16,6 +16,7 @@
     "ionicons": "^4.6.3",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
+    "react-hero-transition": "0.4.0",
     "react-multi-carousel": "^2.3.0",
     "react-router": "^5.1.0",
     "react-router-dom": "^5.1.0",

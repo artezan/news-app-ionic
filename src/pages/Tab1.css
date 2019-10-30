@@ -2,8 +2,15 @@
   max-height: 30vh;
   overflow: hidden;
 }
+.welcome-card-phone ion-img {
+  height: 30vh;
+  overflow: hidden;
+}
 .trend-card {
   height: 400px;
+  box-shadow: 13px 14px 13px 0px rgba(32, 32, 35, 0.1);
+}
+.trend-card-phone {
   box-shadow: 13px 14px 13px 0px rgba(32, 32, 35, 0.1);
 }
 .news-card {
@@ -15,14 +22,29 @@
 }
 .wrap-text-2lines {
   overflow: hidden;
-   text-overflow: ellipsis;
-   display: -webkit-box;
-   line-height: 16px;     /* fallback */
-   max-height: 32px;      /* fallback */
-   -webkit-line-clamp: 2; /* number of lines to show */
-   -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  line-height: 16px; /* fallback */
+  max-height: 32px; /* fallback */
+  -webkit-line-clamp: 2; /* number of lines to show */
+  -webkit-box-orient: vertical;
+}
+.wrap-title-2lines {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  line-height: 20px; /* fallback */
+  max-height: 40px; /* fallback */
+  -webkit-line-clamp: 2; /* number of lines to show */
+  -webkit-box-orient: vertical;
+}
+.pill {
+  background-color: #efefef;
+  border-radius: 15px;
+  border: 1px solid;
 }
 /*
+
 p {
     line-height: 1.5em;
     height: 3em;

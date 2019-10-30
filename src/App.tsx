@@ -15,7 +15,7 @@ import {
   IonTitle
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { apps, flash, send, paper, list } from 'ionicons/icons';
+import { apps, flash, send, paper, list, search } from 'ionicons/icons';
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
@@ -41,11 +41,13 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import './theme/general.css';
 
-import history from 'history';
+import {ScrollProvider} from './context/scroll.context'
 
 setupConfig({
   rippleEffect: false,
-  mode: 'ios'
+  mode: 'ios',
+  hardwareBackButton: true,
+  swipeBackEnabled: false
 });
 
 const App: React.FC = () => (
@@ -76,40 +78,42 @@ const App: React.FC = () => (
       </IonTabs>
     </IonReactRouter>
   </IonApp> */
+
   <IonApp>
-    <div className='wraper-app'>
-      <div className='router-cont'>
-        <IonReactRouter>
-          <IonRouterOutlet>
-            <Route path='/tab1' component={Tab1} exact={true} />
-            <Route path='/tab2' component={Tab2} exact={true} />
-            <Route path='/tab2/details' component={Details} />
-            <Route path='/tab3' component={Tab3} />
-            <Route
-              path='/'
-              render={() => <Redirect to='/tab1' />}
-              exact={true}
-            />
-          </IonRouterOutlet>
-        </IonReactRouter>
-        <div className='bar-cont'>
-          <div className='flex-cont'>
-            <IonButtons className='flex-btns'>
-              <IonButton>
-                <IonIcon color='primary' slot='icon-only' icon={paper} />
-                
-              </IonButton>
-              <IonButton>
-                <IonIcon color='primary' slot='icon-only' icon={list} />
-              </IonButton>
-              <IonButton>
-                <IonIcon color='primary' slot='icon-only' icon={list} />
-              </IonButton>
-            </IonButtons>
-          </div>
+    <ScrollProvider  >
+      <div className='wraper-app'>
+        <div className='router-cont'>
+          <IonReactRouter>
+            <IonRouterOutlet>
+              <Route path='/tab1' component={Tab1} exact={true} />
+              <Route path='/tab2' component={Tab2} exact={true} />
+              <Route path='/tab2/details/:id' component={Details} />
+              <Route path='/tab3' component={Tab3} />
+              <Route
+                path='/'
+                render={() => <Redirect to='/tab1' />}
+                exact={true}
+              />
+            </IonRouterOutlet>
+            <div className='bar-cont'>
+              <div className='flex-cont'>
+                <IonButtons className='flex-btns'>
+                  <IonButton routerLink='/tab1' routerDirection={'none'}>
+                    <IonIcon color='primary' slot='icon-only' icon={paper} />
+                  </IonButton>
+                  <IonButton routerLink='/tab2' routerDirection={'none'}>
+                    <IonIcon color='primary' slot='icon-only' icon={list} />
+                  </IonButton>
+                  <IonButton routerLink='/tab3' routerDirection={'none'}>
+                    <IonIcon color='primary' slot='icon-only' icon={search} />
+                  </IonButton>
+                </IonButtons>
+              </div>
+            </div>
+          </IonReactRouter>
         </div>
       </div>
-    </div>
+    </ScrollProvider>
   </IonApp>
 );
 

@@ -3,26 +3,30 @@ import {
   IonCardContent,
   IonCardHeader,
   IonCardSubtitle,
-  IonCardTitle,
   IonContent,
-  IonHeader,
   IonPage,
-  IonToolbar,
   IonImg,
   IonItem,
-  IonLabel,
-  IonGrid,
-  IonRow,
-  IonCol
+  IonSlides,
+  IonSlide,
+  isPlatform,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonList,
+  IonLabel
 } from '@ionic/react';
-import React from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import './Tab1.css';
 import { useNewsService } from '../services/news.service';
 import 'react-multi-carousel/lib/styles.css';
-import { CarouselComponent } from '../components/Carousel.component';
-import { CardSkeletonComponent } from '../components/CardSkeleton.component';
+import { NewsSkeleton } from '../components/NewsSkeleton';
 import { Article, TopHeadlines } from '../models/TopHeadlines.model';
 import { FormatDate } from '../helpers/date-format';
+import { ModalComponent } from '../components/Modal.component';
+import ScrollContext from '../context/scroll.context';
+import { NewsAll } from '../components/NewsAll';
+import { CardSkeletonComponent } from '../components/CardSkeleton.component';
 
 type NewsRowProps = {
   isLoading: boolean;
@@ -30,127 +34,121 @@ type NewsRowProps = {
 };
 
 const Tab1: React.FC = () => {
+  // hooks
   const { data, loading } = useNewsService({ country: 'mx' });
-  let count = 1,
-    numCols = '4';
+  const [showModal, setShowModal] = useState(false);
+  const [articleModal, setArticleModal] = useState();
+  const scrollContext = useContext(ScrollContext);
+  const { scrollTop, setScrollTop } = scrollContext;
+  let ref = useRef<HTMLIonContentElement | null>(null);
 
-  const NewsRow: React.FC<NewsRowProps> = ({ isLoading, data }) => {
-    const { articles } = { ...data };
-    const arr =
-      isLoading && !data ? [...Array(20)] : articles.slice(4, articles.length);
-    return (
-      <IonRow>
-        {arr.map((article: Article, index: number) => {
-          if (count !== 1) {
-            numCols = numCols === '4' ? '8' : '4';
-          }
-          count = count + 1;
-          count = count === 3 ? 1 : count;
-          return (
-            <IonCol
-              key={`n-${index}`}
-              sizeLg={numCols}
-              sizeMd={numCols}
-              sizeSm='12'
-              sizeXs='12'
-            >
-              {isLoading ? (
-                <CardSkeletonComponent isImg={true}></CardSkeletonComponent>
-              ) : (
-                <div key={index}>
-                  <IonCard className='welcome-card news-card'>
-                    <IonImg
-                      src={article.urlToImage || '/assets/shapes.svg'}
-                      onIonError={(err: any) =>
-                        (err.srcElement.src = '/assets/shapes.svg')
-                      }
-                    ></IonImg>
-                    <IonCardHeader>
-                      <IonCardSubtitle>
-                        {article.source.name} |
-                        <span> {FormatDate(article.publishedAt)}</span>
-                      </IonCardSubtitle>
-                      <IonItem className='ion-no-padding' lines={'none'}>
-                        <IonLabel className='ion-text-nowrap'>
-                          {article.title}
-                        </IonLabel>
-                      </IonItem>
-                    </IonCardHeader>
-                    <IonCardContent style={{ paddingTop: '0%' }}>
-                      <p className='wrap-text-2lines'>{article.description}</p>
-                    </IonCardContent>
-                  </IonCard>
-                </div>
-              )}
-            </IonCol>
-          );
-        })}
-      </IonRow>
-    );
+  const slideOpts = {
+    slidesPerView: 1.6,
+    spaceBetween: 10,
+    centeredSlides: true,
+    touchRatio: 1
   };
+  const isMobile = !isPlatform('tablet') && !isPlatform('desktop');
 
   return (
     <IonPage>
-      <IonContent className='ion-padding' fullscreen={true}>
-        {loading ? (
-          <>
-            <CarouselComponent>
-              {[...Array(4)].map((trending: any, index: number) => (
-                <div key={index}>
-                  <CardSkeletonComponent isImg={true} />
-                </div>
-              ))}
-            </CarouselComponent>
-            <h2>Noticias</h2>
-            <IonGrid>
-              <NewsRow isLoading={true} data={data} />
-            </IonGrid>
-          </>
-        ) : (
-          <h1>Tendencias</h1>
-        )}
-
+      {showModal && (
+        <ModalComponent
+          showModal={showModal}
+          onDidDismiss={() => {
+            setShowModal(false);
+          }}
+          isFullModal={true}
+          data={articleModal}
+        ></ModalComponent>
+      )}
+      <IonContent className='ion-padding'>
         {/* top */}
+        <h1>Tendencias</h1>
         {!loading && data && (
           <>
-            <CarouselComponent>
+            <IonSlides options={slideOpts}>
               {data.articles
                 .slice(0, 4)
                 .map((article: Article, index: number) => (
-                  <div key={index}>
-                    <IonCard className='welcome-card trend-card'>
+                  <IonSlide key={index}>
+                    <IonCard
+                      className='welcome-card trend-card'
+                      button={true}
+                      type={'button'}
+                      onClick={() => {
+                        setArticleModal(article);
+                        setShowModal(true);
+                      }}
+                    >
                       <IonImg
-                        src={article.urlToImage || '/assets/shapes.svg'}
+                        src={article.urlToImage || '/assets/newspaper.svg'}
                         onIonError={(err: any) =>
-                          (err.srcElement.src = '/assets/shapes.svg')
+                          (err.srcElement.src = '/assets/newspaper.svg')
                         }
                       ></IonImg>
-                      <IonCardHeader>
-                        <IonCardSubtitle>
-                          {article.source.name} |
-                          <span> {FormatDate(article.publishedAt)}</span>
-                        </IonCardSubtitle>
-                        <IonItem className='ion-no-padding' lines={'none'}>
-                          <IonLabel className='ion-text-nowrap'>
-                            {article.title}
-                          </IonLabel>
-                        </IonItem>
-                      </IonCardHeader>
-                      <IonCardContent style={{ paddingTop: '0%' }}>
-                        <p>
-                          <span className='wrap-text-2lines'>
-                            {article.description}
-                          </span>
-                        </p>
-                      </IonCardContent>
+                      {isMobile ? (
+                        <>
+                          <IonCardHeader>
+                            <IonCardSubtitle>
+                              {article.source.name} |
+                              <span> {FormatDate(article.publishedAt)}</span>
+                              <span> {FormatDate(article.publishedAt)}</span>
+                              <span> #{index + 1}</span>
+                            </IonCardSubtitle>
+                            <IonItem className='ion-no-padding' lines={'none'}>
+                              <h6>{article.title}</h6>
+                            </IonItem>
+                          </IonCardHeader>
+                        </>
+                      ) : (
+                        <>
+                          <IonCardHeader>
+                            <IonCardSubtitle>
+                              {article.source.name} |
+                              <span> {FormatDate(article.publishedAt)}</span>
+                              <span> #{index + 1}</span>
+                            </IonCardSubtitle>
+                            <IonItem className='ion-no-padding' lines={'none'}>
+                              <h6 className='wrap-title-2lines'>
+                                {article.title}
+                              </h6>
+                            </IonItem>
+                          </IonCardHeader>
+                          <IonCardContent style={{ paddingTop: '0%' }}>
+                            <p className='wrap-text-2lines'>
+                              {article.description}
+                            </p>
+                          </IonCardContent>
+                        </>
+                      )}
                     </IonCard>
-                  </div>
+                  </IonSlide>
                 ))}
-            </CarouselComponent>
+            </IonSlides>
+            {/* general news */}
+            <h1>Noticias</h1>
+
+            <NewsAll
+              articles={data.articles.slice(4, data.articles.length)}
+              setShowModal={setShowModal}
+              setArticleModal={setArticleModal}
+              isMobile={isMobile}
+            ></NewsAll>
+          </>
+        )}
+        {/* Skeletons */}
+        {loading && (
+          <>
+            <IonSlides options={slideOpts}>
+              {[...Array(4)].map((trending: any, index: number) => (
+                <IonSlide key={index}>
+                  <CardSkeletonComponent isImg={true} />
+                </IonSlide>
+              ))}
+            </IonSlides>
             <h2>Noticias</h2>
-            <IonGrid>
-              <NewsRow isLoading={false} data={data} />
-            </IonGrid>
+            <NewsSkeleton></NewsSkeleton>
           </>
         )}
       </IonContent>

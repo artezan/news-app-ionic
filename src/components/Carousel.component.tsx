@@ -20,7 +20,7 @@ export const CarouselComponent: React.FC = ({ children }) => {
       focusOnSelect={false}
       itemClass=''
       keyBoardControl
-      minimumTouchDrag={80}
+      minimumTouchDrag={20}
       partialVisbile={true}
       renderButtonGroupOutside={false}
       renderDotsOutside={false}
