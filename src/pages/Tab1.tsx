@@ -14,7 +14,8 @@ import {
   IonToolbar,
   IonTitle,
   IonList,
-  IonLabel
+  IonLabel,
+  IonToggle
 } from '@ionic/react';
 import React, { useState, useContext, useEffect, useRef } from 'react';
 import './Tab1.css';
@@ -34,10 +35,13 @@ type NewsRowProps = {
 };
 
 const Tab1: React.FC = () => {
+  const hours = new Date().getHours();
+  const isDayTime = hours > 6 && hours < 18;
   // hooks
   const { data, loading } = useNewsService({ country: 'mx' });
   const [showModal, setShowModal] = useState(false);
   const [articleModal, setArticleModal] = useState();
+  const [isDark, setIsDark] = useState(!isDayTime);
   const scrollContext = useContext(ScrollContext);
   const { scrollTop, setScrollTop } = scrollContext;
   let ref = useRef<HTMLIonContentElement | null>(null);
@@ -49,6 +53,10 @@ const Tab1: React.FC = () => {
     touchRatio: 1
   };
   const isMobile = !isPlatform('tablet') && !isPlatform('desktop');
+
+  useEffect(() => {
+    document.body.classList.toggle('dark', isDark);
+  }, []);
 
   return (
     <IonPage>
@@ -62,8 +70,23 @@ const Tab1: React.FC = () => {
           data={articleModal}
         ></ModalComponent>
       )}
+      <IonHeader></IonHeader>
       <IonContent className='ion-padding'>
         {/* top */}
+        <div className='toggle-box'>
+          <IonToggle
+            checked={isDark}
+            onIonChange={ev => {
+              setIsDark(ev.detail.checked);
+              document.body.classList.toggle('dark', ev.detail.checked);
+            }}
+          ></IonToggle>
+          <IonImg
+            className='img-toggle'
+            src={isDark ? '/assets/moon.svg' : '/assets/sun.svg'}
+          ></IonImg>
+        </div>
+
         <h1>Tendencias</h1>
         {!loading && data && (
           <>

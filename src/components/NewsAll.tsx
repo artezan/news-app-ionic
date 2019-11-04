@@ -47,7 +47,6 @@ export const NewsAll = (props: any) => {
                       button={true}
                       type={'button'}
                       onClick={() => {
-                        console.log('card', article);
                         props.setArticleModal(article);
                         props.setShowModal(true);
                       }}

@@ -18,7 +18,8 @@ import {
   IonCardSubtitle,
   IonItem,
   IonCardContent,
-  isPlatform
+  isPlatform,
+  IonToggle
 } from '@ionic/react';
 import { RouteComponentProps } from 'react-router-dom';
 import { arrowBack } from 'ionicons/icons';
@@ -44,7 +45,7 @@ const Details: React.FC<CategoryDetailPageProps> = ({ match }) => {
   const isMobile = !isPlatform('tablet') && !isPlatform('desktop');
 
   return (
-    <IonPage >
+    <IonPage>
       {showModal && (
         <ModalComponent
           showModal={showModal}

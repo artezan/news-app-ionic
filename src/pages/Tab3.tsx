@@ -15,7 +15,6 @@ import { NewsAll } from '../components/NewsAll';
 import { NewsSkeleton } from '../components/NewsSkeleton';
 import { ModalComponent } from '../components/Modal.component';
 
-
 const Tab3Page: React.FC = () => {
   // hooks
 
@@ -51,13 +50,18 @@ const Tab3Page: React.FC = () => {
           placeholder='Buscar por palabras'
           ref={c => (ref = c)}
           onIonInput={() => handlerInput()}
+          onKeyUp={ev => {
+            if (ev.key === 'Enter' || ev.keyCode === 13) {
+              setQ(words);
+            }
+          }}
         ></IonSearchbar>
         <IonButton onClick={() => setQ(words)}>Buscar</IonButton>
         {/* top */}
-        
+
         {!loading && data && (
           <>
-          <h1 className='ion-text-capitalize'> Resultados</h1>
+            <h1 className='ion-text-capitalize'> Resultados</h1>
             {/* general news */}
 
             <NewsAll

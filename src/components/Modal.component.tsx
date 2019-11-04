@@ -4,20 +4,16 @@ import {
   IonButton,
   IonContent,
   IonImg,
-  IonGrid,
-  IonRow,
-  IonCol,
   IonCard,
   IonFab,
   IonFabButton,
   IonIcon,
-  isPlatform,
-  IonItem
+  isPlatform
 } from '@ionic/react';
 import './Modal.css';
 import { Article } from '../models/TopHeadlines.model';
 import { FormatDate } from '../helpers/date-format';
-import { arrowBack } from 'ionicons/icons';
+import { arrowDown } from 'ionicons/icons';
 type ModalComponentProps = {
   showModal: boolean;
   onDidDismiss: any;
@@ -39,7 +35,6 @@ export const ModalComponent: React.FC<ModalComponentProps> = ({
   useEffect(() => {
     history.pushState(null, 'null', window.location.href);
     window.onpopstate = () => {
-      console.log('back');
       setShowModal(false);
       history.go(1);
     };
@@ -85,7 +80,7 @@ export const ModalComponent: React.FC<ModalComponentProps> = ({
             </IonCard>
           </div>
         ) : (
-          <IonCard>
+          <IonCard className='card-phone'>
             <IonImg
               src={data.urlToImage || '/assets/newspaper.svg'}
               onIonError={(err: any) =>
@@ -101,10 +96,7 @@ export const ModalComponent: React.FC<ModalComponentProps> = ({
         </h5>
         <p>{data.content || data.description}</p>
         <div className='flex-box-btn'>
-          <IonButton
-            shape='round'
-            href={data.url}
-          >
+          <IonButton shape='round' href={data.url}>
             Más información
           </IonButton>
         </div>
@@ -112,7 +104,7 @@ export const ModalComponent: React.FC<ModalComponentProps> = ({
         {/*-- fab placed to the top start --*/}
         <IonFab vertical='top' horizontal='start' slot='fixed'>
           <IonFabButton onClick={() => setShowModal(false)}>
-            <IonIcon mode='md' icon={arrowBack} />
+            <IonIcon mode='md' icon={arrowDown} />
           </IonFabButton>
         </IonFab>
       </IonContent>

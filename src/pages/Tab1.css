@@ -8,10 +8,10 @@
 }
 .trend-card {
   height: 400px;
-  box-shadow: 13px 14px 13px 0px rgba(32, 32, 35, 0.1);
+  box-shadow: var(--box-shadows-trend);
 }
 .trend-card-phone {
-  box-shadow: 13px 14px 13px 0px rgba(32, 32, 35, 0.1);
+  box-shadow: var(--box-shadows-trend);
 }
 .news-card {
   height: 400px;
@@ -43,15 +43,12 @@
   border-radius: 15px;
   border: 1px solid;
 }
-/*
-
-p {
-    line-height: 1.5em;
-    height: 3em;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    width: 100%;
+.toggle-box{
+  display: flex;
+  flex-direction: row-reverse;
+}
+.img-toggle{
+  width: 30px;
+  margin-right: 3%;
 }
 
- */
