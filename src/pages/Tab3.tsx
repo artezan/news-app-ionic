@@ -1,16 +1,11 @@
 import React, { useState } from 'react';
 import {
-  IonHeader,
-  IonToolbar,
   IonPage,
-  IonTitle,
   IonContent,
   IonSearchbar,
-  isPlatform,
   IonButton
 } from '@ionic/react';
 import { useSearchService } from '../services/search.service';
-import { match } from 'react-router-dom';
 import { NewsAll } from '../components/NewsAll';
 import { NewsSkeleton } from '../components/NewsSkeleton';
 import { ModalComponent } from '../components/Modal.component';
@@ -19,7 +14,7 @@ const Tab3Page: React.FC = () => {
   // hooks
 
   const [q, setQ] = useState('');
-  const { data, loading, error } = useSearchService({
+  const { data, loading } = useSearchService({
     q
   });
   const [showModal, setShowModal] = useState(false);

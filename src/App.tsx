@@ -3,19 +3,12 @@ import { Redirect, Route } from 'react-router-dom';
 import {
   IonApp,
   IonIcon,
-  IonLabel,
   IonRouterOutlet,
-  IonTabBar,
-  IonTabButton,
-  IonTabs,
   setupConfig,
   IonButton,
-  IonToolbar,
-  IonButtons,
-  IonTitle
-} from '@ionic/react';
+  IonButtons} from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { apps, flash, send, paper, list, search } from 'ionicons/icons';
+import { paper, list, search } from 'ionicons/icons';
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';

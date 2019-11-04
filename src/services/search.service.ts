@@ -1,7 +1,5 @@
-import React from 'react';
 import { useState, useEffect } from 'react';
 import { API_URL } from '../helpers/url-api';
-import { TopHeadlines } from '../models/TopHeadlines.model';
 
 export function useSearchService({ q = '' }) {
   const [data, setData] = useState(null) as any;
@@ -29,6 +27,6 @@ export function useSearchService({ q = '' }) {
     if (q !== '' && q !== undefined) {
       fetchUrl();
     }
-  }, [q]);
+  }, [q, setData]);
   return { data, loading, error };
 }

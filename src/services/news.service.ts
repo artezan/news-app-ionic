@@ -1,9 +1,7 @@
-import React from 'react';
 import { useState, useEffect } from 'react';
 import { API_URL } from '../helpers/url-api';
-import { TopHeadlines } from '../models/TopHeadlines.model';
 
-export function useNewsService({ country = 'mx' }) {
+export function useNewsService({ country = 'mx', time = 0 }) {
   const [data, setData] = useState(null) as any;
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -22,6 +20,7 @@ export function useNewsService({ country = 'mx' }) {
         );
         const data = await response.json();
         console.log(data);
+        console.log('data');
         setLoading(false);
         setData(data);
       } catch (error) {
@@ -30,6 +29,6 @@ export function useNewsService({ country = 'mx' }) {
       }
     };
     fetchUrl();
-  }, []);
+  }, [country, time, setData]);
   return { data, loading, error };
 }

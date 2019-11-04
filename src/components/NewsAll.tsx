@@ -10,7 +10,6 @@ import {
   IonCol
 } from '@ionic/react';
 import React from 'react';
-import { CardSkeletonComponent } from './CardSkeleton.component';
 import { Article } from '../models/TopHeadlines.model';
 import { FormatDate } from '../helpers/date-format';
 import '../pages/Tab1.css';

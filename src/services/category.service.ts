@@ -1,9 +1,7 @@
-import React from 'react';
 import { useState, useEffect } from 'react';
 import { API_URL } from '../helpers/url-api';
-import { TopHeadlines } from '../models/TopHeadlines.model';
 
-export function useCategoryService({ category= 'business' }) {
+export function useCategoryService({ category = 'business' }) {
   const [data, setData] = useState(null) as any;
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -30,6 +28,6 @@ export function useCategoryService({ category= 'business' }) {
       }
     };
     fetchUrl();
-  }, []);
+  }, [category, setData]);
   return { data, loading, error };
 }

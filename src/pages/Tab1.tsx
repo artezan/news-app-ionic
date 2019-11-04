@@ -11,11 +11,9 @@ import {
   IonSlide,
   isPlatform,
   IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonList,
-  IonLabel,
-  IonToggle
+  IonToggle,
+  IonRefresher,
+  IonRefresherContent
 } from '@ionic/react';
 import React, { useState, useContext, useEffect, useRef } from 'react';
 import './Tab1.css';
@@ -28,23 +26,22 @@ import { ModalComponent } from '../components/Modal.component';
 import ScrollContext from '../context/scroll.context';
 import { NewsAll } from '../components/NewsAll';
 import { CardSkeletonComponent } from '../components/CardSkeleton.component';
+import { RefresherEventDetail } from '@ionic/core';
 
-type NewsRowProps = {
-  isLoading: boolean;
-  data: TopHeadlines;
-};
 
 const Tab1: React.FC = () => {
   const hours = new Date().getHours();
   const isDayTime = hours > 6 && hours < 18;
   // hooks
-  const { data, loading } = useNewsService({ country: 'mx' });
+  const [time, setTime] = useState(new Date().getTime());
+
+  const { data, loading } = useNewsService({ country: 'mx', time });
   const [showModal, setShowModal] = useState(false);
   const [articleModal, setArticleModal] = useState();
   const [isDark, setIsDark] = useState(!isDayTime);
   const scrollContext = useContext(ScrollContext);
-  const { scrollTop, setScrollTop } = scrollContext;
-  let ref = useRef<HTMLIonContentElement | null>(null);
+  const [eventRefresh, setEventRefresh] = useState();
+
 
   const slideOpts = {
     slidesPerView: 1.6,
@@ -57,6 +54,23 @@ const Tab1: React.FC = () => {
   useEffect(() => {
     document.body.classList.toggle('dark', isDark);
   }, []);
+  useEffect(() => {
+    if (!loading && eventRefresh !== undefined) {
+      eventRefresh.detail.complete();
+    }
+  }, [loading]);
+
+  const doRefresh = (event: CustomEvent<RefresherEventDetail>) => {
+    setEventRefresh(event);
+    /* const canRefresh = (new Date().getTime() - startTime) / 60000 > 15;
+    console.log(canRefresh);
+    if (canRefresh) {
+      setTime(new Date().getTime());
+    } else {
+      event.detail.complete();
+    } */
+    setTime(new Date().getTime());
+  };
 
   return (
     <IonPage>
@@ -72,6 +86,9 @@ const Tab1: React.FC = () => {
       )}
       <IonHeader></IonHeader>
       <IonContent className='ion-padding'>
+        <IonRefresher slot='fixed' onIonRefresh={doRefresh}>
+          <IonRefresherContent></IonRefresherContent>
+        </IonRefresher>
         {/* top */}
         <div className='toggle-box'>
           <IonToggle

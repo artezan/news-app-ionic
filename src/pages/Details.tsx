@@ -1,32 +1,11 @@
 import React, { useState } from 'react';
 import {
-  IonBackButton,
-  IonButtons,
-  IonHeader,
   IonPage,
-  IonToolbar,
-  IonTitle,
   IonContent,
-  IonFab,
-  IonFabButton,
-  IonIcon,
-  IonSlides,
-  IonSlide,
-  IonCard,
-  IonImg,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonItem,
-  IonCardContent,
-  isPlatform,
-  IonToggle
-} from '@ionic/react';
+  isPlatform} from '@ionic/react';
 import { RouteComponentProps } from 'react-router-dom';
-import { arrowBack } from 'ionicons/icons';
 import { useCategoryService } from '../services/category.service';
 import { ModalComponent } from '../components/Modal.component';
-import { Article } from '../models/TopHeadlines.model';
-import { FormatDate } from '../helpers/date-format';
 import { NewsAll } from '../components/NewsAll';
 import { NewsSkeleton } from '../components/NewsSkeleton';
 
@@ -37,7 +16,7 @@ interface CategoryDetailPageProps
 
 const Details: React.FC<CategoryDetailPageProps> = ({ match }) => {
   // hooks
-  const { data, loading, error } = useCategoryService({
+  const { data, loading } = useCategoryService({
     category: match.params.id
   });
   const [showModal, setShowModal] = useState(false);

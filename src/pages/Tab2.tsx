@@ -1,13 +1,7 @@
 import React from 'react';
 import {
   IonContent,
-  IonHeader,
-  IonItem,
-  IonLabel,
-  IonList,
   IonPage,
-  IonTitle,
-  IonToolbar,
   IonGrid,
   IonRow,
   IonCol,
